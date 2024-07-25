@@ -28,28 +28,6 @@ fn read_dataset(filename: &str) -> (Vec<Vec<f64>>, Vec<f64>) {
 }
 
 fn main() {
-    let a = ValueWrapper::new(-4.0);
-    let b = ValueWrapper::new(2.0);
-
-    let mut c = a.clone() + b.clone();
-    let mut d = a.clone() * b.clone() + b.clone().pow(3.0);
-
-    c += c.clone() + 1.0;
-    c += 1.0 + c.clone() + (-a.clone());
-    d += d.clone() * 2.0 + (b.clone() + a.clone()).relu();
-    d += 3.0 * d.clone() + (b.clone() - a.clone()).relu();
-
-    let e = c - d;
-    let f = e.pow(2.0);
-    let mut g = f.clone() / 2.0;
-    g += 10.0 / f;
-
-    println!("{:.4}", g.0.borrow().data);
-
-    g.backward();
-
-    println!("{:.4}", a.0.borrow().grad);
-    println!("{:.4}", b.0.borrow().grad);
 
     // Read the dataset
     let (x, y) = read_dataset("moon_dataset.csv");

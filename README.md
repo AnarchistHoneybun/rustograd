@@ -62,7 +62,7 @@ decision boundary on the moon dataset:
 
 ## Running tests
 
-To run the units tests, execute `cargo test` in the root directory of the repo.
+To run the unit tests, execute `cargo test` in the root directory of the repo.
 Currently the tests use hardcoded reference values, might update in the future to add some python bindings and use pytorch directly
 to compute the reference values.
 

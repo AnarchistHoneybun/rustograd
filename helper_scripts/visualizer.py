@@ -36,5 +36,4 @@ y_lim = plt.ylim()
 plt.plot(x_lim, [0, 0], color='black', linestyle='--', linewidth=1, alpha=0.5)
 plt.plot([0, 0], y_lim, color='black', linestyle='--', linewidth=1, alpha=0.5)
 
-plt.savefig('mlp_decision_boundary.png')
 plt.show()

@@ -61,7 +61,7 @@ fn main() {
     println!("Number of parameters: {}", model.parameters().len());
 
     // Training loop
-    let n_epochs = 2000;
+    let n_epochs = 50;
     let mut rng = rand::thread_rng();
     for epoch in 0..n_epochs {
         let mut total_loss = ValueWrapper::new(0.0);
@@ -102,7 +102,7 @@ fn main() {
         }
 
         // Print progress
-        if epoch % 50 == 0 {
+        if epoch % 5 == 0 {
             println!(
                 "Epoch {}: Loss = {:.4}, Accuracy = {}/{}",
                 epoch,

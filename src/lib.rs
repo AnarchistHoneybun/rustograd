@@ -1,8 +1,8 @@
-use std::rc::Rc;
 use std::cell::RefCell;
 use std::collections::HashSet;
 use std::fmt;
 use std::ops::{Add, AddAssign, Div, Mul, Neg, Sub};
+use std::rc::Rc;
 
 #[cfg(test)]
 mod tests;
@@ -70,7 +70,7 @@ impl ValueWrapper {
                 Op::Add(a, b) => {
                     a.borrow_mut().grad += v_grad;
                     b.borrow_mut().grad += v_grad;
-                },
+                }
                 Op::Mul(a, b) => {
                     let a_data = a.borrow().data;
                     let b_data = b.borrow().data;
@@ -82,19 +82,19 @@ impl ValueWrapper {
                         let mut b = b.borrow_mut();
                         b.grad += a_data * v_grad;
                     }
-                },
+                }
                 Op::Pow(a, power) => {
                     let a_data = a.borrow().data;
                     {
                         let mut a = a.borrow_mut();
                         a.grad += power * a_data.powf(power - 1.0) * v_grad;
                     }
-                },
+                }
                 Op::Relu(a) => {
                     if v.borrow().data > 0.0 {
                         a.borrow_mut().grad += v_grad;
                     }
-                },
+                }
                 Op::Leaf => {}
             }
         }
@@ -249,7 +249,11 @@ impl ValueWrapper {
     }
 }
 
-fn build_topo(v: Rc<RefCell<Value>>, topo: &mut Vec<Rc<RefCell<Value>>>, visited: &mut HashSet<*mut Value>) {
+fn build_topo(
+    v: Rc<RefCell<Value>>,
+    topo: &mut Vec<Rc<RefCell<Value>>>,
+    visited: &mut HashSet<*mut Value>,
+) {
     let ptr = v.as_ptr();
     if !visited.contains(&ptr) {
         visited.insert(ptr);
@@ -257,10 +261,10 @@ fn build_topo(v: Rc<RefCell<Value>>, topo: &mut Vec<Rc<RefCell<Value>>>, visited
             Op::Add(a, b) | Op::Mul(a, b) => {
                 build_topo(Rc::clone(a), topo, visited);
                 build_topo(Rc::clone(b), topo, visited);
-            },
+            }
             Op::Pow(a, _) | Op::Relu(a) => {
                 build_topo(Rc::clone(a), topo, visited);
-            },
+            }
             Op::Leaf => {}
         }
         topo.push(Rc::clone(&v));

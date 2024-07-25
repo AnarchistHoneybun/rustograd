@@ -1,6 +1,5 @@
+use rustograd::nn::{Module, MLP};
 use rustograd::ValueWrapper;
-
-use rustograd::nn::{MLP, Module};
 
 use rand::seq::SliceRandom;
 use std::fs::File;
@@ -13,9 +12,12 @@ fn read_dataset(filename: &str) -> (Vec<Vec<f64>>, Vec<f64>) {
     let mut y = Vec::new();
 
     for (i, line) in reader.lines().enumerate() {
-        if i == 0 { continue; } // Skip header
+        if i == 0 {
+            continue;
+        } // Skip header
         let line = line.expect("Unable to read line");
-        let values: Vec<f64> = line.split(',')
+        let values: Vec<f64> = line
+            .split(',')
             .map(|s| s.parse().expect("Parse error"))
             .collect();
         x.push(vec![values[0], values[1]]);
@@ -101,15 +103,19 @@ fn main() {
 
         // Print progress
         if epoch % 50 == 0 {
-            println!("Epoch {}: Loss = {:.4}, Accuracy = {}/{}",
-                     epoch, total_loss.0.borrow().data, correct, n_samples);
+            println!(
+                "Epoch {}: Loss = {:.4}, Accuracy = {}/{}",
+                epoch,
+                total_loss.0.borrow().data,
+                correct,
+                n_samples
+            );
         }
     }
 
     // Generate points for visualization
 
     let output_file_name = "decision_boundary_data2.csv";
-
 
     let mut file = File::create(output_file_name).unwrap();
     writeln!(file, "x,y,z").unwrap();

@@ -1,5 +1,5 @@
-use rand::Rng;
 use crate::ValueWrapper;
+use rand::Rng;
 
 // Module trait (equivalent to Python's Module class)
 pub trait Module {
@@ -53,10 +53,14 @@ impl Module for Neuron {
     }
 }
 
-
 impl std::fmt::Debug for Neuron {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        write!(f, "{}Neuron({})", if self.nonlin { "ReLU" } else { "Linear" }, self.w.len())
+        write!(
+            f,
+            "{}Neuron({})",
+            if self.nonlin { "ReLU" } else { "Linear" },
+            self.w.len()
+        )
     }
 }
 
@@ -111,7 +115,7 @@ impl MLP {
         sizes.extend_from_slice(nouts);
 
         let layers = (0..nouts.len())
-            .map(|i| Layer::new(sizes[i], sizes[i+1], i != nouts.len() - 1))
+            .map(|i| Layer::new(sizes[i], sizes[i + 1], i != nouts.len() - 1))
             .collect();
 
         MLP { layers }
@@ -133,7 +137,10 @@ impl Module for MLP {
     }
 
     fn parameters(&self) -> Vec<ValueWrapper> {
-        self.layers.iter().flat_map(|layer| layer.parameters()).collect()
+        self.layers
+            .iter()
+            .flat_map(|layer| layer.parameters())
+            .collect()
     }
 }
 

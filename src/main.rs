@@ -1,5 +1,5 @@
-use rustograd::nn::{Module, MLP};
-use rustograd::ValueWrapper;
+use rustograd::engine::*;
+use rustograd::nn::*;
 
 use rand::seq::SliceRandom;
 use std::fs::File;
@@ -28,7 +28,6 @@ fn read_dataset(filename: &str) -> (Vec<Vec<f64>>, Vec<f64>) {
 }
 
 fn main() {
-
     // Read the dataset
     let (x, y) = read_dataset("moon_dataset.csv");
     let n_samples = x.len();

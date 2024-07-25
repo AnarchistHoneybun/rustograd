@@ -1,4 +1,4 @@
-use crate::ValueWrapper;
+use crate::engine::ValueWrapper;
 use rand::Rng;
 
 // Module trait (equivalent to Python's Module class)

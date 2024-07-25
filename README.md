@@ -1,5 +1,5 @@
 # *rust*-ograd
 
 <div align="center">
-<img src="attachments/training_progress_2.gif" alt="training process">
+<img src="attachments/training_progress_2.gif" alt="training process", width="70%">
 </div>
